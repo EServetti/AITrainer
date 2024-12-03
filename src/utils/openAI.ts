@@ -12,18 +12,24 @@ async function getPlanFromGPT(
   height: number,
   daysOfTraining: number,
   age: number,
-  goal: string
+  goal: string,
+  trainingTime: string,
+  sex: string,
+  bodyPart: string
 ): Promise<string | null> {
   try {
     const prompt: string = `Necesito que me devuelvas una rutina semanal de gimnasio personalizada teniendo en cuenta los siguientes datos del usuario:
     - Edad: ${age}
     - Peso (kg): ${weight}
+    - Sexo: ${sex}
     - Altura (m): ${height}
     - Días de entrenamiento: ${daysOfTraining}
     - Objetivo corporal: ${goal}
+    - Tiempo de entrenamiento: ${trainingTime}
+    - Principal parte del cuerpo a mejorar (no te centres solamente en esta parte): ${bodyPart}
     Necesito que la respuesta sea en el siguiente formato sin lineas de codigo ni texto extra:
     - Un array principal que contenga los días de entrenamiento.
-    - Cada día de entrenamiento debe tener entre 6 y 8 ejercicios
+    - Cada día de entrenamiento debe tener al menos 6 ejercicios.
     - Cada día de entrenamiento debe ser un objeto con la siguiente estructura:
   {
     "day": "Día 1",
