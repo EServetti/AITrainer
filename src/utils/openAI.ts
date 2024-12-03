@@ -23,6 +23,7 @@ async function getPlanFromGPT(
     - Objetivo corporal: ${goal}
     Necesito que la respuesta sea en el siguiente formato sin lineas de codigo ni texto extra:
     - Un array principal que contenga los días de entrenamiento.
+    - Cada día de entrenamiento debe tener entre 6 y 8 ejercicios
     - Cada día de entrenamiento debe ser un objeto con la siguiente estructura:
   {
     "day": "Día 1",

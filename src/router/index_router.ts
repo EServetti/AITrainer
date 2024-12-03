@@ -1,8 +1,21 @@
-import { Router } from "express";
+import { Request, Response, NextFunction, Router } from "express";
 import planRouter from "./plans_router";
 
-const indexRouter = Router()
+const indexRouter = Router();
 
-indexRouter.use("/", planRouter)
+function logPetitions(req: Request, res: Response, next: NextFunction): void {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0"); 
+  const day = now.getDate().toString().padStart(2, "0"); 
+  const hours = now.getHours().toString().padStart(2, "0"); 
+  const minutes = now.getMinutes().toString().padStart(2, "0"); 
+  const date = `${day}/${month}/${year} | ${hours}:${minutes}`;
+  const petition = `${date} | ${req.method} | ${req.url}`;
+  console.log(petition);
+  next(); 
+}
 
-export default indexRouter
+indexRouter.use("/", logPetitions, planRouter);
+
+export default indexRouter;
