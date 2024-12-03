@@ -20,7 +20,7 @@ server.listen(port, startCb)
 server.use(express.json())
 server.use(express.urlencoded({extended: true}))
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: 'https://ai-trainer-app.vercel.app',
     credentials: true
   };
   
