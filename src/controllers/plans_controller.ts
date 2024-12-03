@@ -6,6 +6,7 @@ async function getPlan(req: Request, res:Response, next: NextFunction):Promise<a
     try {
         const {age, weight, height, daysOfTraining, goal} = req.body
         const plan = await getPlanFromGPT(weight, height, daysOfTraining, age, goal)
+        
         const response = returnReponse(200, plan)
         return res.json(response)
     } catch (error) {
