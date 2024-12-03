@@ -4,6 +4,7 @@ import indexRouter from "./router/index_router"
 import errorHandler from "./middlewares/errorHandler"
 import cors from "cors"
 import pathHandler from "./middlewares/pathHandler"
+import cluster from "cluster"
 
 dotenv.config()
 
@@ -13,7 +14,20 @@ const startCb = () => {
     console.log(`Server running on port ${port}`);
 }
 
+if(cluster.isPrimary) {
+for (let i=1; i<=2; i++) {
+const worker = cluster.fork()
+worker.on('error', (err) => {
+  console.error(`Worker ${worker.process.pid} encountered an error: ${err.message}`);
+});
+}
+console.log("proceso primario");
+} else {
+console.log("proceso worker "+process.pid);
 server.listen(port, startCb)
+}
+
+
 
 
 //Middlewares
