@@ -45,8 +45,6 @@ async function getPlanFromGPT(
       ]
     }
 `;
-console.log(prompt);
-
 
     ;
     const response = await openai.chat.completions.create({
