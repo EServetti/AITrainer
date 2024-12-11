@@ -25,10 +25,8 @@ const validatePlan = joi_1.default.object({
         "number.max": "La cantidad de dias máxima es 7",
     }),
     goal: joi_1.default.string()
-        .valid("perder peso", "ganar músculo", "mantenerse", "aumentar resistencia")
         .required()
         .messages({
-        "any.only": "Porfavor seleccione entre perder peso, ganar músculo y mantenerse",
         'string.empty': "Seleccione una opción"
     }),
     trainingTime: joi_1.default.string().valid("1/2h-1h", "1h-3/2h", "3/2h-2h", "+2h").messages({
@@ -37,6 +35,5 @@ const validatePlan = joi_1.default.object({
     sex: joi_1.default.string().valid("masculino", "femenino", "no especificado").messages({
         'string.empty': "Seleccione una opción"
     }),
-    bodyPart: joi_1.default.string().valid("pecho", "espalda", "brazos", "piernas", "abdomen", "tren_superior", "ninguna parte en especifico")
 });
 exports.default = validatePlan;
