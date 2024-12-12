@@ -25,11 +25,10 @@ function getPlanFromGPT(weight, height, daysOfTraining, age, goal, trainingTime,
     - Edad: ${age}
     - Peso (kg): ${weight}
     - Sexo: ${sex}
-    - Altura (m): ${height}
+    - Altura (cm): ${height}
     - Días de entrenamiento: ${daysOfTraining}
-    - Objetivo corporal: ${goal}
+    - Objetivo corporal y zonas principales a mejorar (ignorar en caso de ser información sin sentido): ${goal}
     - Tiempo de entrenamiento diario: ${trainingTime}
-    - Principal parte del cuerpo a mejorar (no te centres solamente en esta parte): ${bodyPart}
     
     Ten en cuenta lo siguiente para generar la rutina:
     - Si el tiempo de entrenamiento es "1/2h-1h", la rutina debe incluir 6 ejercicios por día con combinaciones de ejercicios compuestos e isolados.
