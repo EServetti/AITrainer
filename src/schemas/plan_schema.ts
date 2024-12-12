@@ -9,8 +9,8 @@ const validatePlan: Joi.ObjectSchema = Joi.object({
     "number.max": "El peso máximo son 250kg",
   }),
   height: Joi.number()
-    .min(0.6)
-    .max(2.6)
+    .min(60)
+    .max(260)
     .required()
     .messages({
       "number.min": "La altura mínima es 0.6m",
@@ -28,7 +28,7 @@ const validatePlan: Joi.ObjectSchema = Joi.object({
   trainingTime: Joi.string().valid("1/2h-1h", "1h-3/2h", "3/2h-2h", "+2h").messages({
     'string.empty': "Seleccione una opción"
   }),
-  sex: Joi.string().valid("masculino","femenino","no especificado").messages({
+  sex: Joi.string().valid("masculino","femenino","x").messages({
     'string.empty': "Seleccione una opción"
   }),
 });

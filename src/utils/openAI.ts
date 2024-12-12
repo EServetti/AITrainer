@@ -22,7 +22,7 @@ async function getPlanFromGPT(
     - Edad: ${age}
     - Peso (kg): ${weight}
     - Sexo: ${sex}
-    - Altura (m): ${height}
+    - Altura (cm): ${height}
     - Días de entrenamiento: ${daysOfTraining}
     - Objetivo corporal y zonas principales a mejorar (ignorar en caso de ser información sin sentido): ${goal}
     - Tiempo de entrenamiento diario: ${trainingTime}
