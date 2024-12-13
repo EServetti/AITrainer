@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction, Router } from "express";
 import planRouter from "./plans_router";
+import { createUser } from "../DAO/users_dao";
+import { User } from "../types";
+import usersRouter from "./users_router";
 
 const indexRouter = Router();
 
@@ -17,5 +20,5 @@ function logPetitions(req: Request, res: Response, next: NextFunction): void {
 }
 
 indexRouter.use("/", logPetitions, planRouter);
-
+indexRouter.use("/", logPetitions, usersRouter)
 export default indexRouter;
