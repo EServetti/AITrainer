@@ -27,12 +27,11 @@ const validatePlan: Joi.ObjectSchema = Joi.object({
   sex: Joi.string().valid("masculino", "femenino", "x").messages({
     "string.empty": "Seleccione una opción",
   }),
-  extra: Joi.string().required().max(150).messages({
-    "string.empty": "Seleccione una opción",
-  }),
+  extra: Joi.string().max(150).allow(""),
   bodyType: Joi.string().valid("mesomorfo", "ectomorfo", "endomorfo").messages({
     "string.empty": "Seleccione una opción",
   }),
+  dificulty: Joi.string().valid("facil", "dificil", "medio").required()
 });
 
 export default validatePlan;
