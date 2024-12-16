@@ -31,11 +31,10 @@ const validatePlan = joi_1.default.object({
     sex: joi_1.default.string().valid("masculino", "femenino", "x").messages({
         "string.empty": "Seleccione una opción",
     }),
-    extra: joi_1.default.string().required().max(150).messages({
-        "string.empty": "Seleccione una opción",
-    }),
+    extra: joi_1.default.string().max(150).allow(""),
     bodyType: joi_1.default.string().valid("mesomorfo", "ectomorfo", "endomorfo").messages({
         "string.empty": "Seleccione una opción",
     }),
+    dificulty: joi_1.default.string().valid("facil", "dificil", "medio").required()
 });
 exports.default = validatePlan;

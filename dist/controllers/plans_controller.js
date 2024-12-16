@@ -18,8 +18,8 @@ const openAI_1 = __importDefault(require("../utils/openAI"));
 function getPlan(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { age, weight, height, daysOfTraining, goal, extra, trainingTime, sex, bodyType } = req.body;
-            const plan = yield (0, openAI_1.default)(weight, height, daysOfTraining, age, goal, trainingTime, sex, extra, bodyType);
+            const { age, weight, height, daysOfTraining, goal, extra, trainingTime, sex, bodyType, dificulty } = req.body;
+            const plan = yield (0, openAI_1.default)(weight, height, daysOfTraining, age, goal, trainingTime, sex, extra, bodyType, dificulty);
             const response = (0, genericResponses_1.default)(200, plan);
             return res.json(response);
         }
