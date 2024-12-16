@@ -1,7 +1,4 @@
-type Resp = {
-  statusCode: number;
-  message: string | object | any[];
-};
+import { Resp } from "../types"
 
 function returnReponse(status: number, message: string | object | any[] | null): Resp {
   try {

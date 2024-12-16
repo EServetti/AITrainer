@@ -15,7 +15,8 @@ async function getPlanFromGPT(
   goal: string,
   trainingTime: string,
   sex: string,
-  bodyPart: string
+  extra: string,
+  bodyType: string
 ): Promise<string | null> {
   try {
     const prompt: string = `Necesito que me devuelvas una rutina semanal de gimnasio personalizada teniendo en cuenta los siguientes datos del usuario:
@@ -23,9 +24,11 @@ async function getPlanFromGPT(
     - Peso (kg): ${weight}
     - Sexo: ${sex}
     - Altura (cm): ${height}
+    -Tipo de cuerpo: ${bodyType}
     - Días de entrenamiento: ${daysOfTraining}
     - Objetivo corporal y zonas principales a mejorar (ignorar en caso de ser información sin sentido): ${goal}
     - Tiempo de entrenamiento diario: ${trainingTime}
+    - Aclaración extra (ignorar en caso de ser información sin sentido): ${extra}
     
     Ten en cuenta lo siguiente para generar la rutina:
     - Si el tiempo de entrenamiento es "1/2h-1h", la rutina debe incluir 6 ejercicios por día con combinaciones de ejercicios compuestos e isolados.

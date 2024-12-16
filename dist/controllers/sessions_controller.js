@@ -12,15 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPlan = getPlan;
+exports.register = register;
 const genericResponses_1 = __importDefault(require("../utils/genericResponses"));
-const openAI_1 = __importDefault(require("../utils/openAI"));
-function getPlan(req, res, next) {
+function register(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { age, weight, height, daysOfTraining, goal, extra, trainingTime, sex, bodyType } = req.body;
-            const plan = yield (0, openAI_1.default)(weight, height, daysOfTraining, age, goal, trainingTime, sex, extra, bodyType);
-            const response = (0, genericResponses_1.default)(200, plan);
+            const response = (0, genericResponses_1.default)(201, "The account has been created!");
             return res.json(response);
         }
         catch (error) {
