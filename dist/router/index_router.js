@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const plans_router_1 = __importDefault(require("./plans_router"));
+const users_router_1 = __importDefault(require("./users_router"));
 const indexRouter = (0, express_1.Router)();
 function logPetitions(req, res, next) {
     const now = new Date();
@@ -19,4 +20,5 @@ function logPetitions(req, res, next) {
     next();
 }
 indexRouter.use("/", logPetitions, plans_router_1.default);
+indexRouter.use("/", logPetitions, users_router_1.default);
 exports.default = indexRouter;
