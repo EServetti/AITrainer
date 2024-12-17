@@ -17,5 +17,5 @@ exports.validateUser = joi_1.default.object({
         .pattern(/[A-Z]/)
         .pattern(/\d/)
         .required(),
-    verified: joi_1.default.boolean().required(),
+    verified: joi_1.default.boolean(),
 });

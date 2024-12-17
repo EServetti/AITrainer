@@ -13,12 +13,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.register = register;
+exports.verifyAccount = verifyAccount;
 const genericResponses_1 = __importDefault(require("../utils/genericResponses"));
+const users_dao_1 = require("../DAO/users_dao");
+const customError_1 = __importDefault(require("../utils/customError"));
 function register(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const response = (0, genericResponses_1.default)(201, "The account has been created!");
             return res.json(response);
+        }
+        catch (error) {
+            return next(error);
+        }
+    });
+}
+function verifyAccount(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { email, verifyCode } = req.params;
+            const user = yield (0, users_dao_1.readByEmail)(email);
+            if (user.length == 0) {
+                const error = new customError_1.default("Not found usser", 400);
+                throw error;
+            }
+            if (user[0].verifyCode === verifyCode) {
+                (0, users_dao_1.updateUser)(user[0].id, "verified", true);
+                const response = (0, genericResponses_1.default)(200, "The account has been verified!");
+                return res.json(response);
+            }
         }
         catch (error) {
             return next(error);

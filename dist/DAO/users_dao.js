@@ -19,6 +19,7 @@ exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
 const promise_1 = __importDefault(require("mysql2/promise"));
 const customError_1 = __importDefault(require("../utils/customError"));
+const users_dto_1 = __importDefault(require("./DTO/users.dto"));
 const database = promise_1.default.createPool({
     host: "localhost",
     user: "root",
@@ -28,16 +29,19 @@ const database = promise_1.default.createPool({
 function createUser(data) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const [result] = yield database.query(`insert into users (first_name, last_name, sex, date_of_birth, email, password, verified) values(?,?,?,?,?,?,?);`, [
-                data.first_name,
-                data.last_name,
-                data.sex,
-                data.date_of_birth,
-                data.email,
-                data.password,
-                data.verified,
+            const userData = new users_dto_1.default(data);
+            const [result] = yield database.query(`insert into users (first_name, last_name, sex, date_of_birth, email, password, verifyCode, verified) values(?,?,?,?,?,?,?,?);`, [
+                userData.first_name,
+                userData.last_name,
+                userData.sex,
+                userData.date_of_birth,
+                userData.email,
+                userData.password,
+                userData.verifyCode,
+                userData.verified,
             ]);
-            return result;
+            const [rows] = yield database.query("SELECT * FROM USERS WHERE email = ?", [data.email]);
+            return rows;
         }
         catch (error) {
             throw error;

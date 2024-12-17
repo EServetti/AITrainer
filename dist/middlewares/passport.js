@@ -19,6 +19,7 @@ const customError_1 = __importDefault(require("../utils/customError"));
 const joi_validator_1 = require("../utils/joi_validator");
 const user_schema_1 = require("../schemas/user_schema");
 const hash_1 = require("../utils/hash");
+const nodemailer_1 = __importDefault(require("../utils/nodemailer"));
 passport_1.default.use("register", new passport_local_1.Strategy({ passReqToCallback: true, usernameField: "email" }, (req, email, password, done) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const exists = yield (0, users_dao_1.readByEmail)(email);
@@ -29,6 +30,7 @@ passport_1.default.use("register", new passport_local_1.Strategy({ passReqToCall
         (0, joi_validator_1.validatorFunction)(user_schema_1.validateUser, req.body);
         req.body.password = (0, hash_1.createHash)(password);
         const user = yield (0, users_dao_1.createUser)(req.body);
+        yield (0, nodemailer_1.default)({ to: user[0].email, verifyCode: user[0].verifyCode });
         return done(null, user);
     }
     catch (error) {
