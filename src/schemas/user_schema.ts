@@ -12,5 +12,5 @@ export const validateUser: Joi.ObjectSchema = Joi.object({
     .pattern(/[A-Z]/)
     .pattern(/\d/)
     .required(),
-  verified: Joi.boolean().required(),
+  verified: Joi.boolean(),
 });

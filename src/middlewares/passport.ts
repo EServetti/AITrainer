@@ -7,6 +7,7 @@ import { validatorFunction } from "../utils/joi_validator";
 import { User } from "../types";
 import { validateUser } from "../schemas/user_schema";
 import { createHash } from "../utils/hash";
+import sendMail from "../utils/nodemailer";
 
 passport.use("register", new LocalStrategy({passReqToCallback: true, usernameField: "email"}, 
     async (req: Request, email: string, password: string, done: (error: any, user?: User | false, options?: any) => void) => {
@@ -19,6 +20,8 @@ passport.use("register", new LocalStrategy({passReqToCallback: true, usernameFie
             validatorFunction(validateUser, req.body)
             req.body.password = createHash(password)
             const user = await createUser(req.body)
+
+            await sendMail({to: user[0].email, verifyCode: user[0].verifyCode})
             return done(null, user)
         } catch (error) {
             return done(error, false)
