@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createHash = createHash;
+exports.compareHash = compareHash;
 const bcryptjs_1 = require("bcryptjs");
 function createHash(password) {
     try {
@@ -11,4 +12,8 @@ function createHash(password) {
     catch (error) {
         throw error;
     }
+}
+function compareHash(password, comparePass) {
+    const compared = (0, bcryptjs_1.compareSync)(password, comparePass);
+    return compared;
 }

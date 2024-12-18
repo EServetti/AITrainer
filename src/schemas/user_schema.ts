@@ -13,4 +13,5 @@ export const validateUser: Joi.ObjectSchema = Joi.object({
     .pattern(/\d/)
     .required(),
   verified: Joi.boolean(),
+  role: Joi.string().valid("USER","ADMIN")
 });

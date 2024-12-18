@@ -1,4 +1,4 @@
-import { genSaltSync, hashSync } from "bcryptjs"; 
+import { compareSync, genSaltSync, hashSync } from "bcryptjs"; 
 
 export function createHash(password: string) {
     try {
@@ -8,4 +8,9 @@ export function createHash(password: string) {
     } catch (error) {
         throw error;
     }
+}
+
+export function compareHash(password: string, comparePass: string){
+    const compared = compareSync(password, comparePass)
+    return compared
 }

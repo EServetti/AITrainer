@@ -7,6 +7,7 @@ export interface User {
   password: string;
   verifyCode: string;
   verified: boolean;
+  role: string
 }
 export type Resp = {
   statusCode: number;

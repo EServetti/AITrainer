@@ -10,6 +10,7 @@ class UserDTO {
   password: string;
   verifyCode: string;
   verified: boolean;
+  role: string
 
   constructor(data: User) {
     this.first_name = data.first_name;
@@ -20,6 +21,7 @@ class UserDTO {
     this.password = data.password;
     this.verifyCode = crypto.randomBytes(6).toString("hex");
     this.verified = data.verified || false;
+    this.role = data.role || "USER"
   }
 }
 

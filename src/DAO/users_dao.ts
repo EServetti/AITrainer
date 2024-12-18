@@ -16,7 +16,7 @@ export async function createUser(data: User): Promise<any> {
     const userData = new UserDTO(data)
     
     const [result] = await database.query(
-      `insert into users (first_name, last_name, sex, date_of_birth, email, password, verifyCode, verified) values(?,?,?,?,?,?,?,?);`,
+      `insert into users (first_name, last_name, sex, date_of_birth, email, password, verifyCode, verified, role) values(?,?,?,?,?,?,?,?,?);`,
       [
         userData.first_name,
         userData.last_name,
@@ -26,6 +26,7 @@ export async function createUser(data: User): Promise<any> {
         userData.password,
         userData.verifyCode,
         userData.verified,
+        userData.role
       ]
     );
     

@@ -18,4 +18,5 @@ exports.validateUser = joi_1.default.object({
         .pattern(/\d/)
         .required(),
     verified: joi_1.default.boolean(),
+    role: joi_1.default.string().valid("USER", "ADMIN")
 });

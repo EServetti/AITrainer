@@ -14,9 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.register = register;
 exports.verifyAccount = verifyAccount;
+exports.login = login;
 const genericResponses_1 = __importDefault(require("../utils/genericResponses"));
 const users_dao_1 = require("../DAO/users_dao");
 const customError_1 = __importDefault(require("../utils/customError"));
+const jwt_1 = require("../utils/jwt");
 function register(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -42,6 +44,22 @@ function verifyAccount(req, res, next) {
                 const response = (0, genericResponses_1.default)(200, "The account has been verified!");
                 return res.json(response);
             }
+        }
+        catch (error) {
+            return next(error);
+        }
+    });
+}
+function login(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            if (!req.user) {
+                throw new customError_1.default("Auth error", 500);
+            }
+            const user = req.user;
+            const token = (0, jwt_1.createToken)(user);
+            const response = (0, genericResponses_1.default)(200, "Successfully loged in!");
+            return res.cookie("token", token, { maxAge: 60 * 60 * 1000 }).json(response);
         }
         catch (error) {
             return next(error);

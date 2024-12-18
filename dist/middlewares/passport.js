@@ -37,4 +37,20 @@ passport_1.default.use("register", new passport_local_1.Strategy({ passReqToCall
         return done(error, false);
     }
 })));
+passport_1.default.use("login", new passport_local_1.Strategy({ passReqToCallback: true, usernameField: "email" }, (req, email, password, done) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield (0, users_dao_1.readByEmail)(email);
+        const equals = (0, hash_1.compareHash)(password, user[0].password);
+        if (user.length === 0 || !equals) {
+            const error = new customError_1.default("Invalid credentials!", 400);
+            return done(error, false);
+        }
+        else {
+            return done(null, user[0]);
+        }
+    }
+    catch (error) {
+        return done(error, false);
+    }
+})));
 exports.default = passport_1.default;
