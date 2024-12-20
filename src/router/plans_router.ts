@@ -8,7 +8,7 @@ import validate from "../middlewares/validate";
 
 const planRouter = Router()
 //Rutas para pedido de planes
-planRouter.post("/plan", validate("PUBLIC"), validatorMiddleware(validatePlan), getPlan)
+planRouter.post("/plan", validate(["PUBLIC"]), validatorMiddleware(validatePlan), getPlan)
 
 
 export default planRouter

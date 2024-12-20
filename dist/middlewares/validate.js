@@ -9,7 +9,7 @@ function validate(requiredRole) {
     return (req, res, next) => {
         try {
             const token = req.cookies["token"];
-            if (requiredRole === "PUBLIC") {
+            if (requiredRole.includes("PUBLIC")) {
                 return next();
             }
             else if (!token) {
@@ -20,7 +20,7 @@ function validate(requiredRole) {
             if (typeof user === "string") {
                 throw new customError_1.default("Wrong JWT", 500);
             }
-            if (requiredRole != user.role) {
+            if (!requiredRole.includes(user.role)) {
                 const error = new customError_1.default("Bad auth", 400);
                 throw error;
             }

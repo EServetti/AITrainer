@@ -17,3 +17,7 @@ export interface mailInfo {
   to: string;
   verifyCode: string
 }
+export interface recoverInfo {
+  to: string,
+  token: string
+}

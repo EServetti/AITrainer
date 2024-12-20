@@ -10,5 +10,5 @@ const plan_schema_1 = __importDefault(require("../schemas/plan_schema"));
 const validate_1 = __importDefault(require("../middlewares/validate"));
 const planRouter = (0, express_1.Router)();
 //Rutas para pedido de planes
-planRouter.post("/plan", (0, validate_1.default)("PUBLIC"), (0, joi_validator_1.validatorMiddleware)(plan_schema_1.default), plans_controller_1.getPlan);
+planRouter.post("/plan", (0, validate_1.default)(["PUBLIC"]), (0, joi_validator_1.validatorMiddleware)(plan_schema_1.default), plans_controller_1.getPlan);
 exports.default = planRouter;

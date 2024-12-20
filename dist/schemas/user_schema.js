@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateUser = void 0;
+exports.password = exports.validateUser = void 0;
 const joi_1 = __importDefault(require("joi"));
 exports.validateUser = joi_1.default.object({
     first_name: joi_1.default.string().min(3).max(20).required(),
@@ -19,4 +19,13 @@ exports.validateUser = joi_1.default.object({
         .required(),
     verified: joi_1.default.boolean(),
     role: joi_1.default.string().valid("USER", "ADMIN")
+});
+exports.password = joi_1.default.object({
+    token: joi_1.default.string(),
+    password: joi_1.default.string()
+        .min(8)
+        .max(15)
+        .pattern(/[A-Z]/)
+        .pattern(/\d/)
+        .required(),
 });

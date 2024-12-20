@@ -15,3 +15,13 @@ export const validateUser: Joi.ObjectSchema = Joi.object({
   verified: Joi.boolean(),
   role: Joi.string().valid("USER","ADMIN")
 });
+
+export const password : Joi.ObjectSchema = Joi.object({
+  token: Joi.string(),
+  password: Joi.string()
+  .min(8)
+  .max(15)
+  .pattern(/[A-Z]/)
+  .pattern(/\d/)
+  .required(),
+})

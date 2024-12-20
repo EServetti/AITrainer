@@ -39,6 +39,9 @@ passport.use("login", new LocalStrategy({passReqToCallback: true, usernameField:
             if (user.length === 0 || !equals) {
                 const error = new CustomError("Invalid credentials!", 400)
                 return done(error, false)
+            } else if(user[0].verified === 0) {
+                const error = new CustomError("Please verify tour account first", 400)
+                return done(error, false)
             } else {
                 return done(null, user[0])
             }

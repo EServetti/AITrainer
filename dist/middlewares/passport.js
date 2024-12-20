@@ -45,6 +45,10 @@ passport_1.default.use("login", new passport_local_1.Strategy({ passReqToCallbac
             const error = new customError_1.default("Invalid credentials!", 400);
             return done(error, false);
         }
+        else if (user[0].verified === 0) {
+            const error = new customError_1.default("Please verify tour account first", 400);
+            return done(error, false);
+        }
         else {
             return done(null, user[0]);
         }

@@ -60,6 +60,7 @@ function readUsers(filter) {
                     "password",
                     "verified",
                     "date_of_birth",
+                    "resetPasswordToken"
                 ];
                 if (!allowedColumns.includes(filter.column)) {
                     const error = new customError_1.default("Not valid column!", 400);
@@ -99,6 +100,8 @@ function updateUser(id_user, column, newValue) {
                 "password",
                 "verified",
                 "date_of_birth",
+                "resetPasswordToken",
+                "resetPasswordExpires"
             ];
             if (!allowedColumns.includes(column)) {
                 const error = new customError_1.default("Not valid column!", 400);
