@@ -18,7 +18,8 @@ exports.validateUser = joi_1.default.object({
         .pattern(/\d/)
         .required(),
     verified: joi_1.default.boolean(),
-    role: joi_1.default.string().valid("USER", "ADMIN")
+    role: joi_1.default.string().valid("USER", "ADMIN"),
+    photo: joi_1.default.string().uri()
 });
 exports.password = joi_1.default.object({
     token: joi_1.default.string(),

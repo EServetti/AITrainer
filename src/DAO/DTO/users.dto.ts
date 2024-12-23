@@ -10,7 +10,8 @@ class UserDTO {
   password: string;
   verifyCode: string;
   verified: boolean;
-  role: string
+  role: string;
+  photo: string
 
   constructor(data: User) {
     this.first_name = data.first_name;
@@ -22,6 +23,7 @@ class UserDTO {
     this.verifyCode = crypto.randomBytes(6).toString("hex");
     this.verified = data.verified || false;
     this.role = data.role || "USER"
+    this.photo = data.photo || "../public/img/defaultUser.png"
   }
 }
 

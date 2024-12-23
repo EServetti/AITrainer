@@ -30,7 +30,7 @@ function createUser(data) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const userData = new users_dto_1.default(data);
-            const [result] = yield database.query(`insert into users (first_name, last_name, sex, date_of_birth, email, password, verifyCode, verified, role) values(?,?,?,?,?,?,?,?,?);`, [
+            const [result] = yield database.query(`insert into users (first_name, last_name, sex, date_of_birth, email, password, verifyCode, verified, role, photo) values(?,?,?,?,?,?,?,?,?,?);`, [
                 userData.first_name,
                 userData.last_name,
                 userData.sex,
@@ -39,7 +39,8 @@ function createUser(data) {
                 userData.password,
                 userData.verifyCode,
                 userData.verified,
-                userData.role
+                userData.role,
+                userData.photo
             ]);
             const [rows] = yield database.query("SELECT * FROM USERS WHERE email = ?", [data.email]);
             return rows;

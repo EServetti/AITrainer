@@ -15,6 +15,7 @@ class UserDTO {
         this.verifyCode = crypto_1.default.randomBytes(6).toString("hex");
         this.verified = data.verified || false;
         this.role = data.role || "USER";
+        this.photo = data.photo || "../public/img/defaultUser.png";
     }
 }
 exports.default = UserDTO;

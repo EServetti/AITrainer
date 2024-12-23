@@ -13,7 +13,8 @@ export const validateUser: Joi.ObjectSchema = Joi.object({
     .pattern(/\d/)
     .required(),
   verified: Joi.boolean(),
-  role: Joi.string().valid("USER","ADMIN")
+  role: Joi.string().valid("USER","ADMIN"),
+  photo: Joi.string().uri()
 });
 
 export const password : Joi.ObjectSchema = Joi.object({

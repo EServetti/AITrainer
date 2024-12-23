@@ -18,6 +18,8 @@ exports.login = login;
 exports.data = data;
 exports.recover = recover;
 exports.updatePass = updatePass;
+exports.loginGoogle = loginGoogle;
+exports.logout = logout;
 const genericResponses_1 = __importDefault(require("../utils/genericResponses"));
 const users_dao_1 = require("../DAO/users_dao");
 const customError_1 = __importDefault(require("../utils/customError"));
@@ -71,7 +73,14 @@ function login(req, res, next) {
             const user = req.user;
             const token = (0, jwt_1.createToken)(user);
             const response = (0, genericResponses_1.default)(200, "Successfully loged in!");
-            return res.cookie("token", token, { maxAge: 60 * 60 * 1000 }).json(response);
+            return res
+                .cookie("token", token, {
+                secure: true,
+                signed: true,
+                maxAge: 3600000,
+                sameSite: "none",
+            })
+                .json(response);
         }
         catch (error) {
             return next(error);
@@ -92,7 +101,7 @@ function data(req, res, next) {
                 sex: data.sex,
                 date_of_birth: data.date_of_birth,
                 email: data.email,
-                role: data.role
+                role: data.role,
             };
             const response = (0, genericResponses_1.default)(200, dataToSend);
             return res.json(response);
@@ -117,7 +126,7 @@ function recover(req, res, next) {
             yield (0, users_dao_1.updateUser)(user[0].id, "resetPasswordExpires", resetPAsswordExpires);
             yield (0, recoverEmail_1.default)({
                 to: email,
-                token: resetPasswordToken
+                token: resetPasswordToken,
             });
             const response = (0, genericResponses_1.default)(200, "We've sent you a recover email");
             return res.json(response);
@@ -133,7 +142,7 @@ function updatePass(req, res, next) {
             const { token, password } = req.body;
             const user = yield (0, users_dao_1.readUsers)({
                 column: "resetPasswordToken",
-                value: token
+                value: token,
             });
             if (user.length === 0) {
                 const error = new customError_1.default("This token is not valid", 400);
@@ -147,6 +156,39 @@ function updatePass(req, res, next) {
             yield (0, users_dao_1.updateUser)(user[0].id, "password", newPassword);
             yield (0, users_dao_1.updateUser)(user[0].id, "resetPasswordToken", "");
             yield (0, users_dao_1.updateUser)(user[0].id, "resetPasswordExpires", 0);
+        }
+        catch (error) {
+            return next(error);
+        }
+    });
+}
+function loginGoogle(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            if (!req.user) {
+                throw new customError_1.default("Auth error", 500);
+            }
+            const user = req.user;
+            const token = (0, jwt_1.createToken)(user);
+            return res
+                .cookie("token", token, {
+                secure: true,
+                signed: true,
+                maxAge: 3600000,
+                sameSite: "none",
+            })
+                .redirect("http://localhost:5173");
+        }
+        catch (error) {
+            return next(error);
+        }
+    });
+}
+function logout(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = (0, genericResponses_1.default)(200, "Loged out");
+            return res.clearCookie("token", { secure: true, sameSite: "none" }).json(response);
         }
         catch (error) {
             return next(error);
