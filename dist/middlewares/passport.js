@@ -88,7 +88,7 @@ passport_1.default.use("google", new passport_google_oauth2_1.Strategy({
                         : "No profile picture provided",
                     sex: profile._json.gender || "x",
                     verified: true,
-                    date_of_birth: profile._json.birthday || "Not specified",
+                    date_of_birth: profile._json.birthday || new Date,
                     role: "USER",
                     verifyCode: "",
                 });

@@ -18,5 +18,5 @@ usersRouter.post("/logout", (0, validate_1.default)(["USER", "ADMIN"]), sessions
 usersRouter.post("/recover", (0, validate_1.default)(["PUBLIC"]), sessions_controller_1.recover);
 usersRouter.post("/password", (0, validate_1.default)(["PUBLIC"]), (0, joi_validator_1.validatorMiddleware)(user_schema_1.password), sessions_controller_1.updatePass);
 usersRouter.get("/google", (0, validate_1.default)(["PUBLIC"]), passport_1.default.authenticate("google", { scope: ["email", "profile"] }));
-usersRouter.get("google/callback", (0, validate_1.default)(["PUBLIC"]), passport_1.default.authenticate("Google", { session: false }), sessions_controller_1.loginGoogle);
+usersRouter.get("/google/callback", (0, validate_1.default)(["PUBLIC"]), passport_1.default.authenticate("google", { session: false }), sessions_controller_1.loginGoogle);
 exports.default = usersRouter;

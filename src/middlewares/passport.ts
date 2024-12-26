@@ -108,6 +108,7 @@ passport.use(
       ) => void
     ) => {
       try {
+
         if (profile.emails?.[0]?.value) {
           const exists = await readByEmail(profile.emails?.[0]?.value);
           if (exists.length === 0) {
@@ -122,7 +123,7 @@ passport.use(
                   : "No profile picture provided",
               sex: (profile as any)._json.gender || "x",
               verified: true,
-              date_of_birth: (profile as any)._json.birthday || "Not specified",
+              date_of_birth: (profile as any)._json.birthday || new Date,
               role: "USER",
               verifyCode: "",
             });

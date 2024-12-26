@@ -15,6 +15,6 @@ usersRouter.post("/logout", validate(["USER","ADMIN"]), logout)
 usersRouter.post("/recover", validate(["PUBLIC"]), recover)
 usersRouter.post("/password", validate(["PUBLIC"]), validatorMiddleware(password), updatePass)
 usersRouter.get("/google", validate(["PUBLIC"]), passport.authenticate("google", {scope: ["email", "profile"]}))
-usersRouter.get("google/callback", validate(["PUBLIC"]), passport.authenticate("Google", { session: false }), loginGoogle)
+usersRouter.get("/google/callback", validate(["PUBLIC"]), passport.authenticate("google", { session: false }), loginGoogle)
 
 export default usersRouter

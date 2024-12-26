@@ -33,17 +33,17 @@ else {
 //Middlewares
 server.use(express_1.default.json());
 server.use(express_1.default.urlencoded({ extended: true }));
+// const corsOptions = {
+//     origin: 'https://ai-trainer-app.vercel.app',
+//     credentials: true
+//   };
 const corsOptions = {
-    origin: 'https://ai-trainer-app.vercel.app',
+    origin: 'http://localhost:5173',
     credentials: true
 };
-// const corsOptions = {
-//   origin: 'http://localhost:5173',
-//   credentials: true
-// };
 server.use((0, cors_1.default)(corsOptions));
+server.use((0, cookie_parser_1.default)(process.env.SECRET_COOKIE));
 //Routers
 server.use(index_router_1.default);
 server.use(errorHandler_1.default);
 server.use(pathHandler_1.default);
-server.use((0, cookie_parser_1.default)());
