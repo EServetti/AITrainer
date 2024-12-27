@@ -25,7 +25,7 @@ passport.use(
       try {
         const exists = await readByEmail(email);
         if (exists.length != 0) {
-          const error = new CustomError("This account already exists!", 400);
+          const error = new CustomError("¡Ya existe una cuenta con este email!", 400);
           return done(error, false);
         }
         validatorFunction(validateUser, req.body);

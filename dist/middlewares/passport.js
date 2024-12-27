@@ -25,7 +25,7 @@ passport_1.default.use("register", new passport_local_1.Strategy({ passReqToCall
     try {
         const exists = yield (0, users_dao_1.readByEmail)(email);
         if (exists.length != 0) {
-            const error = new customError_1.default("This account already exists!", 400);
+            const error = new customError_1.default("¡Ya existe una cuenta con este email!", 400);
             return done(error, false);
         }
         (0, joi_validator_1.validatorFunction)(user_schema_1.validateUser, req.body);

@@ -12,7 +12,7 @@ async function sendMail(data: mailInfo) {
     },
   });
 
-  const verificationUrl = `https://localhost:8000/verify/${data.to}/${data.verifyCode}`;
+  const verificationUrl = `https://localhost:5173/verify/${data.to}/${data.verifyCode}`;
   const htmlContent = `
     <h1>¡Bienvenido a  AITrainer!</h1>
       <p>¡Solo necesitas verificar tu cuenta para empezar a usar AITrainer!</p>
