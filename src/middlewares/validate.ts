@@ -5,7 +5,9 @@ import CustomError from "../utils/customError";
 function validate(requiredRole: string[]) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
+
       const token = req.cookies["token"];
+
       if (requiredRole.includes("PUBLIC")) {
         return next();
       } else if (!token) {

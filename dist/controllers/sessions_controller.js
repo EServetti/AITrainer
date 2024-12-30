@@ -75,8 +75,8 @@ function login(req, res, next) {
             const response = (0, genericResponses_1.default)(200, "Successfully loged in!");
             return res
                 .cookie("token", token, {
+                httpOnly: true,
                 secure: true,
-                signed: true,
                 maxAge: 3600000,
                 sameSite: "none",
             })
@@ -172,8 +172,8 @@ function loginGoogle(req, res, next) {
             const token = (0, jwt_1.createToken)(user);
             return res
                 .cookie("token", token, {
+                httpOnly: true,
                 secure: true,
-                signed: true,
                 maxAge: 3600000,
                 sameSite: "none",
             })

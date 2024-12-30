@@ -56,13 +56,14 @@ export async function login(
     if (!req.user) {
       throw new CustomError("Auth error", 500);
     }
+    
     const user = req.user;
     const token = createToken(user);
     const response = returnReponse(200, "Successfully loged in!");
     return res
       .cookie("token", token, {
+        httpOnly: true,
         secure: true,
-        signed: true,
         maxAge: 3600000,
         sameSite: "none",
       })
@@ -165,8 +166,8 @@ export async function loginGoogle(
     const token = createToken(user);
     return res
       .cookie("token", token, {
+        httpOnly: true,
         secure: true,
-        signed: true,
         maxAge: 3600000,
         sameSite: "none",
       })
