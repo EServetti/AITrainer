@@ -77,6 +77,7 @@ passport.use(
             date_of_birth: user[0].date_of_birth,
             email: user[0].email,
             role: user[0].role,
+            photo: user[0].photo
           };
           return done(null, data);
         }
@@ -120,7 +121,7 @@ passport.use(
               photo:
                 profile.photos && profile.photos.length > 0
                   ? profile.photos[0].value
-                  : "No profile picture provided",
+                  : null,
               sex: (profile as any)._json.gender || "x",
               verified: true,
               date_of_birth: (profile as any)._json.birthday || new Date,
@@ -137,6 +138,7 @@ passport.use(
             date_of_birth: user[0].date_of_birth,
             email: user[0].email,
             role: user[0].role,
+            photo: user[0].photo
           };
           return done(null, data)
         }

@@ -8,7 +8,7 @@ export interface User {
   verifyCode: string;
   verified: boolean;
   role: string,
-  photo: string
+  photo: string | null
 }
 export type Resp = {
   statusCode: number;

@@ -59,6 +59,7 @@ passport_1.default.use("login", new passport_local_1.Strategy({ passReqToCallbac
                 date_of_birth: user[0].date_of_birth,
                 email: user[0].email,
                 role: user[0].role,
+                photo: user[0].photo
             };
             return done(null, data);
         }
@@ -85,7 +86,7 @@ passport_1.default.use("google", new passport_google_oauth2_1.Strategy({
                     last_name: ((_h = profile.name) === null || _h === void 0 ? void 0 : _h.familyName) || "No last name provided",
                     photo: profile.photos && profile.photos.length > 0
                         ? profile.photos[0].value
-                        : "No profile picture provided",
+                        : null,
                     sex: profile._json.gender || "x",
                     verified: true,
                     date_of_birth: profile._json.birthday || new Date,
@@ -102,6 +103,7 @@ passport_1.default.use("google", new passport_google_oauth2_1.Strategy({
                 date_of_birth: user[0].date_of_birth,
                 email: user[0].email,
                 role: user[0].role,
+                photo: user[0].photo
             };
             return done(null, data);
         }

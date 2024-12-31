@@ -102,6 +102,7 @@ function data(req, res, next) {
                 date_of_birth: data.date_of_birth,
                 email: data.email,
                 role: data.role,
+                photo: data.photo
             };
             const response = (0, genericResponses_1.default)(200, dataToSend);
             return res.json(response);

@@ -90,6 +90,7 @@ export async function data(
       date_of_birth: data.date_of_birth,
       email: data.email,
       role: data.role,
+      photo: data.photo
     };
     const response = returnReponse(200, dataToSend);
     return res.json(response);
