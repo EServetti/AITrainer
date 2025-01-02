@@ -27,6 +27,7 @@ const jwt_1 = require("../utils/jwt");
 const recoverEmail_1 = __importDefault(require("../utils/recoverEmail"));
 const hash_1 = require("../utils/hash");
 const crypto_1 = __importDefault(require("crypto"));
+const user_data_dao_1 = require("../DAO/user_data_dao");
 function register(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -43,10 +44,8 @@ function verifyAccount(req, res, next) {
         try {
             const { email, verifyCode } = req.params;
             const user = yield (0, users_dao_1.readByEmail)(email);
-            console.log(verifyCode);
-            console.log(user[0]);
             if (user.length == 0) {
-                const error = new customError_1.default("Not found usser", 400);
+                const error = new customError_1.default("Not found user", 400);
                 throw error;
             }
             if (user[0].verifyCode === verifyCode) {
@@ -94,6 +93,7 @@ function data(req, res, next) {
             const data = (0, jwt_1.verifyToken)(token);
             if (typeof data === "string")
                 return new customError_1.default("Bad Token!", 500);
+            const planData = yield (0, user_data_dao_1.readData)(data.id);
             const dataToSend = {
                 id: data.id,
                 first_name: data.first_name,
@@ -102,7 +102,8 @@ function data(req, res, next) {
                 date_of_birth: data.date_of_birth,
                 email: data.email,
                 role: data.role,
-                photo: data.photo
+                photo: data.photo,
+                planData: planData[0]
             };
             const response = (0, genericResponses_1.default)(200, dataToSend);
             return res.json(response);

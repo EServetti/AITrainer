@@ -5,8 +5,8 @@ import { RowDataPacket } from "mysql2/promise";
 import UserDTO from "./DTO/users.dto";
 
 const database = mysql2.createPool({
-  host: "localhost",
-  user: "root",
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: "aitrainer_dev",
 });

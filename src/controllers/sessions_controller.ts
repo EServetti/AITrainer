@@ -6,6 +6,7 @@ import { createToken, verifyToken } from "../utils/jwt";
 import recoverEmail from "../utils/recoverEmail";
 import { createHash } from "../utils/hash";
 import crypto from "crypto";
+import { readData } from "../DAO/user_data_dao";
 
 export async function register(
   req: Request,
@@ -28,10 +29,8 @@ export async function verifyAccount(
   try {
     const { email, verifyCode } = req.params;
     const user = await readByEmail(email);
-    console.log(verifyCode);
-    console.log(user[0]);
     if (user.length == 0) {
-      const error = new CustomError("Not found usser", 400);
+      const error = new CustomError("Not found user", 400);
       throw error;
     }
     if (user[0].verifyCode === verifyCode) {
@@ -82,6 +81,7 @@ export async function data(
     const token = req.cookies["token"];
     const data = verifyToken(token);
     if (typeof data === "string") return new CustomError("Bad Token!", 500);
+    const planData = await readData(data.id)
     const dataToSend = {
       id: data.id,
       first_name: data.first_name,
@@ -90,7 +90,8 @@ export async function data(
       date_of_birth: data.date_of_birth,
       email: data.email,
       role: data.role,
-      photo: data.photo
+      photo: data.photo,
+      planData: planData[0]
     };
     const response = returnReponse(200, dataToSend);
     return res.json(response);

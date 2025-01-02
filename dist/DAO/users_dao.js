@@ -21,8 +21,8 @@ const promise_1 = __importDefault(require("mysql2/promise"));
 const customError_1 = __importDefault(require("../utils/customError"));
 const users_dto_1 = __importDefault(require("./DTO/users.dto"));
 const database = promise_1.default.createPool({
-    host: "localhost",
-    user: "root",
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: "aitrainer_dev",
 });

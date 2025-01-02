@@ -22,3 +22,11 @@ export interface recoverInfo {
   to: string,
   token: string
 }
+export interface UserData {
+  user_id: number;
+  weight: number;
+  height: number;
+  goal: string;
+  bodyType: "mesomorfo" | "ectomorfo" | "endomorfo"
+  difficulty: "facil" | "dificil" | "medio"
+}
