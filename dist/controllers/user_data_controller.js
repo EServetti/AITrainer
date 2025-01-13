@@ -12,14 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.create_data = create_data;
+exports.createData = createData;
+exports.updateData = updateData;
 const user_data_dao_1 = require("../DAO/user_data_dao");
 const genericResponses_1 = __importDefault(require("../utils/genericResponses"));
-function create_data(req, res, next) {
+function createData(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield (0, user_data_dao_1.create)(req.body);
-            const response = (0, genericResponses_1.default)(200, "The data has been saved");
+            const response = (0, genericResponses_1.default)(201, "The data has been saved");
+            return res.json(response);
+        }
+        catch (error) {
+            return next(error);
+        }
+    });
+}
+function updateData(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { user_id } = req.body;
+            const data = req.body;
+            delete data.user_id;
+            for (const prop in data) {
+                yield (0, user_data_dao_1.update)(user_id, prop, data[prop]);
+            }
+            const response = (0, genericResponses_1.default)(200, "Data updated!");
             return res.json(response);
         }
         catch (error) {

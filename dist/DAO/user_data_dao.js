@@ -61,12 +61,14 @@ function update(id, column, newValue) {
                 "height",
                 "difficulty",
                 "bodyType",
-                "goal"
+                "goal",
             ];
             if (!allowedColumns.includes(column)) {
                 const error = new customError_1.default("Not valid column!", 400);
                 throw error;
             }
+            const [result] = yield database.query(`update user_data set ${column} = ? where user_id = ?`, [newValue, id]);
+            return result;
         }
         catch (error) {
             throw error;

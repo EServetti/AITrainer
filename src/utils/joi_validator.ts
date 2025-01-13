@@ -7,6 +7,7 @@ import { User } from "../types";
 export function validatorMiddleware(schema: Joi.ObjectSchema) {
     return (req: Request, res: Response, next: NextFunction) => {
       try {
+
         const validation = schema.validate(req.body, { abortEarly: false });
         if (validation.error) {
           // console.log(validation.error);

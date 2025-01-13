@@ -34,28 +34,33 @@ export async function readData(id: number) {
       "select * from user_data where user_id = ?",
       [id]
     );
-    return rows
+    return rows;
   } catch (error) {
     throw error;
   }
 }
 
-export async function update(id:number, column: string, newValue: any) {
+export async function update(id: number, column: string, newValue: any) {
   try {
+
     const allowedColumns = [
       "user_id",
       "weight",
       "height",
       "difficulty",
       "bodyType",
-      "goal"
-
+      "goal",
     ];
     if (!allowedColumns.includes(column)) {
       const error = new CustomError("Not valid column!", 400);
-      throw error
+      throw error;
     }
+    const [result] = await database.query(
+      `update user_data set ${column} = ? where user_id = ?`,
+      [newValue, id]
+    );
+    return result;
   } catch (error) {
-    throw error
+    throw error;
   }
 }

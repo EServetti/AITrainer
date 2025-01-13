@@ -13,8 +13,8 @@ const validatePlan = joi_1.default.object({
         "number.max": "El peso máximo son 250kg",
     }),
     height: joi_1.default.number().min(60).max(260).required().messages({
-        "number.min": "La altura mínima es 0.6m",
-        "number.max": "La altura máxima es 2.6m",
+        "number.min": "La altura mínima es 60cm",
+        "number.max": "La altura máxima es 260cm",
     }),
     daysOfTraining: joi_1.default.number().min(1).max(7).required().messages({
         "number.min": "La cantidad de dias mínima es 1",
@@ -35,6 +35,6 @@ const validatePlan = joi_1.default.object({
     bodyType: joi_1.default.string().valid("mesomorfo", "ectomorfo", "endomorfo").messages({
         "string.empty": "Seleccione una opción",
     }),
-    dificulty: joi_1.default.string().valid("facil", "dificil", "medio").required()
+    difficulty: joi_1.default.string().valid("facil", "dificil", "medio").required()
 });
 exports.default = validatePlan;
