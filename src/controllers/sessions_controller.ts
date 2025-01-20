@@ -55,7 +55,7 @@ export async function login(
     if (!req.user) {
       throw new CustomError("Auth error", 500);
     }
-    
+
     const user = req.user;
     const token = createToken(user);
     const response = returnReponse(200, "Successfully loged in!");
@@ -78,20 +78,21 @@ export async function data(
   next: NextFunction
 ): Promise<any> {
   try {
-    const token = req.cookies["token"];
-    const data = verifyToken(token);
+    let token = req.cookies["token"];
+    token = verifyToken(token);
+    const data = await readByEmail(token.email)
     if (typeof data === "string") return new CustomError("Bad Token!", 500);
-    const planData = await readData(data.id)
+    const planData = await readData(data[0].id);
     const dataToSend = {
-      id: data.id,
-      first_name: data.first_name,
-      last_name: data.last_name,
-      sex: data.sex,
-      date_of_birth: data.date_of_birth,
-      email: data.email,
-      role: data.role,
-      photo: data.photo,
-      planData: planData[0]
+      id: data[0].id,
+      first_name: data[0].first_name,
+      last_name: data[0].last_name,
+      sex: data[0].sex,
+      date_of_birth: data[0].date_of_birth,
+      email: data[0].email,
+      role: data[0].role,
+      photo: data[0].photo,
+      planData: planData[0],
     };
     const response = returnReponse(200, dataToSend);
     return res.json(response);
@@ -185,9 +186,26 @@ export async function logout(
   next: NextFunction
 ): Promise<any> {
   try {
-    const response = returnReponse(200, "Loged out")
-    return res.clearCookie("token", {secure: true, sameSite: "none"}).json(response)
+    const response = returnReponse(200, "Loged out");
+    return res
+      .clearCookie("token", { secure: true, sameSite: "none" })
+      .json(response);
   } catch (error) {
-    return next(error)
+    return next(error);
+  }
+}
+
+export async function updateDateOfBirth(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> {
+  try {
+    const {id, date_of_birth} = req.body
+    await updateUser(id, "date_of_birth", date_of_birth)
+    const response = returnReponse(200, "The account has been updated!")
+    return res.json(response)
+  } catch (error) {
+    return next(error);
   }
 }

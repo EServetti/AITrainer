@@ -20,6 +20,7 @@ exports.recover = recover;
 exports.updatePass = updatePass;
 exports.loginGoogle = loginGoogle;
 exports.logout = logout;
+exports.updateDateOfBirth = updateDateOfBirth;
 const genericResponses_1 = __importDefault(require("../utils/genericResponses"));
 const users_dao_1 = require("../DAO/users_dao");
 const customError_1 = __importDefault(require("../utils/customError"));
@@ -89,21 +90,22 @@ function login(req, res, next) {
 function data(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const token = req.cookies["token"];
-            const data = (0, jwt_1.verifyToken)(token);
+            let token = req.cookies["token"];
+            token = (0, jwt_1.verifyToken)(token);
+            const data = yield (0, users_dao_1.readByEmail)(token.email);
             if (typeof data === "string")
                 return new customError_1.default("Bad Token!", 500);
-            const planData = yield (0, user_data_dao_1.readData)(data.id);
+            const planData = yield (0, user_data_dao_1.readData)(data[0].id);
             const dataToSend = {
-                id: data.id,
-                first_name: data.first_name,
-                last_name: data.last_name,
-                sex: data.sex,
-                date_of_birth: data.date_of_birth,
-                email: data.email,
-                role: data.role,
-                photo: data.photo,
-                planData: planData[0]
+                id: data[0].id,
+                first_name: data[0].first_name,
+                last_name: data[0].last_name,
+                sex: data[0].sex,
+                date_of_birth: data[0].date_of_birth,
+                email: data[0].email,
+                role: data[0].role,
+                photo: data[0].photo,
+                planData: planData[0],
             };
             const response = (0, genericResponses_1.default)(200, dataToSend);
             return res.json(response);
@@ -190,7 +192,22 @@ function logout(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const response = (0, genericResponses_1.default)(200, "Loged out");
-            return res.clearCookie("token", { secure: true, sameSite: "none" }).json(response);
+            return res
+                .clearCookie("token", { secure: true, sameSite: "none" })
+                .json(response);
+        }
+        catch (error) {
+            return next(error);
+        }
+    });
+}
+function updateDateOfBirth(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { id, date_of_birth } = req.body;
+            yield (0, users_dao_1.updateUser)(id, "date_of_birth", date_of_birth);
+            const response = (0, genericResponses_1.default)(200, "The account has been updated!");
+            return res.json(response);
         }
         catch (error) {
             return next(error);
