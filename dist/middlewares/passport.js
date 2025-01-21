@@ -71,7 +71,7 @@ passport_1.default.use("login", new passport_local_1.Strategy({ passReqToCallbac
 passport_1.default.use("google", new passport_google_oauth2_1.Strategy({
     clientID: process.env.GOOGLE_CLIENT_ID || "",
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-    callbackURL: "http://localhost:8000/google/callback",
+    callbackURL: "https://aitrainer-pkwu.onrender.com/google/callback",
     passReqToCallback: true,
 }, (req, accesstoken, refreshToken, profile, done) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;

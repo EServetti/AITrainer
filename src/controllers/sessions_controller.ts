@@ -174,7 +174,7 @@ export async function loginGoogle(
         maxAge: 3600000,
         sameSite: "none",
       })
-      .redirect("http://localhost:5173");
+      .redirect("https://ai-trainer-app.vercel.app/");
   } catch (error) {
     return next(error);
   }

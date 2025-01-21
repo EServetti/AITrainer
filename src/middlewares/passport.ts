@@ -94,7 +94,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-      callbackURL: "http://localhost:8000/google/callback",
+      callbackURL: "https://aitrainer-pkwu.onrender.com/google/callback",
       passReqToCallback: true,
     },
     async (
