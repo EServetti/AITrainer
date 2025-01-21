@@ -5,6 +5,7 @@ import errorHandler from "./middlewares/errorHandler"
 import cors from "cors"
 import pathHandler from "./middlewares/pathHandler"
 import cluster from "cluster"
+import cookieParser from "cookie-parser"
 
 dotenv.config()
 
@@ -33,12 +34,18 @@ server.listen(port, startCb)
 //Middlewares
 server.use(express.json())
 server.use(express.urlencoded({extended: true}))
+// const corsOptions = {
+//     origin: 'https://ai-trainer-app.vercel.app',
+//     credentials: true
+//   };
 const corsOptions = {
-    origin: 'https://ai-trainer-app.vercel.app',
-    credentials: true
-  };
-  
+  origin: 'http://localhost:5173',
+  credentials: true
+};
+
 server.use(cors(corsOptions))
+server.use(cookieParser(process.env.SECRET_COOKIE))
+
 
 //Routers
 server.use(indexRouter)

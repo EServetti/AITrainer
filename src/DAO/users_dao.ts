@@ -2,29 +2,38 @@ import mysql2 from "mysql2/promise";
 import { User } from "../types";
 import CustomError from "../utils/customError";
 import { RowDataPacket } from "mysql2/promise";
+import UserDTO from "./DTO/users.dto";
 
 const database = mysql2.createPool({
-  host: "localhost",
-  user: "root",
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: "aitrainer_dev",
 });
 
 export async function createUser(data: User): Promise<any> {
   try {
+    const userData = new UserDTO(data)
+    
     const [result] = await database.query(
-      `insert into users (first_name, last_name, sex, date_of_birth, email, password, verified) values(?,?,?,?,?,?,?);`,
+      `insert into users (first_name, last_name, sex, date_of_birth, email, password, verifyCode, verified, role, photo) values(?,?,?,?,?,?,?,?,?,?);`,
       [
-        data.first_name,
-        data.last_name,
-        data.sex,
-        data.date_of_birth,
-        data.email,
-        data.password,
-        data.verified,
+        userData.first_name,
+        userData.last_name,
+        userData.sex,
+        userData.date_of_birth,
+        userData.email,
+        userData.password,
+        userData.verifyCode,
+        userData.verified,
+        userData.role,
+        userData.photo
       ]
     );
-    return result;
+    
+    const [rows] = await database.query("SELECT * FROM USERS WHERE email = ?",[data.email])
+
+    return rows
   } catch (error) {
     throw error;
   }
@@ -40,6 +49,7 @@ export async function readUsers(filter:{column: string, value: string | number |
         "password",
         "verified",
         "date_of_birth",
+        "resetPasswordToken"
       ];
       if (!allowedColumns.includes(filter.column)) {
         const error = new CustomError("Not valid column!", 400);
@@ -81,6 +91,8 @@ export async function updateUser(
       "password",
       "verified",
       "date_of_birth",
+      "resetPasswordToken",
+      "resetPasswordExpires"
     ];
     if (!allowedColumns.includes(column)) {
       const error = new CustomError("Not valid column!", 400);

@@ -27,7 +27,7 @@ function validatorFunction(schema, user) {
     try {
         const validation = schema.validate(user, { abortEarly: false });
         if (validation.error) {
-            // console.log(validation.error);
+            console.log(validation.error);
             const message = validation.error.details.map((error) => error.message);
             const error = new customError_1.default(message.join(", "), 400);
             throw error;
