@@ -21,7 +21,7 @@ function recoverEmail(data) {
                 pass: process.env.NODEMAILER_PASSWORD
             }
         });
-        const resetUrl = `https://localhost/password/${data.token}`;
+        const resetUrl = `https://ai-trainer-app.vercel.app/password/${data.token}`;
         const htmlContent = `
     <p>You requested a password reset. Please click on the following link to reset your password: </p>
     <a href="${resetUrl}" style="padding: 10px 20px; background-color: blue; color: white; text-decoration: none; border-radius: 5px;">
