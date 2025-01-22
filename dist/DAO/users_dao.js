@@ -24,7 +24,7 @@ const database = promise_1.default.createPool({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
-    database: "aitrainer_dev",
+    database: process.env.DATABASE_NAME,
 });
 function createUser(data) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -42,7 +42,7 @@ function createUser(data) {
                 userData.role,
                 userData.photo
             ]);
-            const [rows] = yield database.query("SELECT * FROM USERS WHERE email = ?", [data.email]);
+            const [rows] = yield database.query("SELECT * FROM users WHERE email = ?", [data.email]);
             return rows;
         }
         catch (error) {

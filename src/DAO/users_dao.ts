@@ -8,7 +8,7 @@ const database = mysql2.createPool({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
-  database: "aitrainer_dev",
+  database: process.env.DATABASE_NAME,
 });
 
 export async function createUser(data: User): Promise<any> {
@@ -31,7 +31,7 @@ export async function createUser(data: User): Promise<any> {
       ]
     );
     
-    const [rows] = await database.query("SELECT * FROM USERS WHERE email = ?",[data.email])
+    const [rows] = await database.query("SELECT * FROM users WHERE email = ?",[data.email])
 
     return rows
   } catch (error) {
