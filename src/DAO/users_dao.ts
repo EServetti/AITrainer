@@ -37,6 +37,8 @@ export async function createUser(data: User): Promise<any> {
     return rows
   } catch (error) {
     throw error;
+  } finally {
+    await database.end()
   }
 }
 
@@ -64,6 +66,8 @@ export async function readUsers(filter:{column: string, value: string | number |
     }
   } catch (error) {
     throw error
+  } finally {
+    await database.end()
   }
 }
 
@@ -76,6 +80,8 @@ export async function readByEmail(email: string) {
     return rows;
   } catch (error) {
     throw error;
+  } finally {
+    await database.end()
   }
 }
 
@@ -107,6 +113,8 @@ export async function updateUser(
     return result;
   } catch (error) {
     throw error;
+  } finally {
+    await database.end()
   }
 }
 
@@ -116,5 +124,7 @@ export async function deleteUser(id:number) {
     return result
   } catch (error) {
     throw error
+  } finally {
+    await database.end()
   }
 }

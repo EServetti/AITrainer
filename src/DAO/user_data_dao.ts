@@ -26,6 +26,8 @@ export async function create(data: UserData) {
     return result;
   } catch (error) {
     throw error;
+  } finally {
+    await database.end()
   }
 }
 
@@ -38,6 +40,8 @@ export async function readData(id: number) {
     return rows;
   } catch (error) {
     throw error;
+  } finally {
+    await database.end()
   }
 }
 
@@ -63,5 +67,7 @@ export async function update(id: number, column: string, newValue: any) {
     return result;
   } catch (error) {
     throw error;
+  } finally {
+    await database.end()
   }
 }
